@@ -1,19 +1,29 @@
 import { useState } from 'react'
 import Frontpage from './Frontpage.jsx'
-import Querypage from './Querypage.jsx'
+import Selectpage from './Selectpage.jsx'
+import Datequerypage from './Datequerypage.jsx'
 
 function App() {
-  const [showQuery, setShowQuery] = useState(false)
+  const [screen, setScreen] = useState("home");
 
-  return (
-    <>
-      {showQuery ? (
-        <Querypage onBack={() => setShowQuery(false)} />
-      ) : (
-        <Frontpage onStart={() => setShowQuery(true)} />
-      )}
-    </>
-  )
+  if (screen === "home") {
+    return <Frontpage onStart={() => setScreen("menu")} />;
+  }
+
+  if (screen === "menu") {
+    return (
+      <Selectpage
+        onBack={() => setScreen("home")}
+        onSelect={(choice) => setScreen(choice)}
+      />
+    );
+  }
+
+  if (screen === "date") {
+    return <Datequerypage onBack={() => setScreen("menu")} />;
+  }
+
+  return <Frontpage onStart={() => setScreen("menu")} />;
 }
 
-export default App
+export default App;

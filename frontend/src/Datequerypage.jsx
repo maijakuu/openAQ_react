@@ -8,7 +8,8 @@ function Querypage({ onBack }) {
   return (
     <section id="center">
       <div className="hero"></div>
-      <div className="laatikko">
+      <div className="menulaatikko">
+      <h1>Search all data from a chosen day</h1>
       <label htmlFor="location">Choose location:</label>
       <select
         id="location"
@@ -23,8 +24,6 @@ function Querypage({ onBack }) {
         <option value="4593">4593: Kallio 2</option>
         <option value="9287">9287: Mäkelänkatu</option>
       </select>
-
-      <p>Selected location: {location}</p>
       
       <label htmlFor="measurementDate">Choose a date from January 2024:</label>
       <input
