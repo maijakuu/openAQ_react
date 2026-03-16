@@ -70,7 +70,6 @@
 .tooltip {
   position: fixed;
   left: 100%;
-  transform: translateY(-50%);
   display: inline-block;
   margin-left: 8px;
 }
@@ -79,9 +78,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
+  vertical-align: middle;
   background: #7F52FF;
   color: white;
   font-size: 12px;
@@ -97,16 +97,21 @@
   left: 50%;
   transform: translateX(25%);
   width: 250px;
-  padding: 8px 10px;
+  padding: 20px;
   border-radius: 8px;
-  background: #222;
-  color: white;
-  font-size: 12px;
+  background: #ffffff;
+  color: rgb(0, 0, 0);
+  font-size: 15px;
   text-align: center;
   z-index: 10;
+  border-style: dotted;
 }
 
 .tooltip:hover .tooltipText {
   visibility: visible;
   opacity: 1;
+}
+.titleblock{
+  color: transparent;
+  line-height: 50px;
 }

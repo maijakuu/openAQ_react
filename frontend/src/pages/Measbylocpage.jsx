@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import '../components/App.css'
 
-function Measbylocpage({ onBack }) {
+function Measbylocpage({ onBack, onSelect }) {
   const [location, setLocation] = useState('')
-  const [date, setDate] = useState('')
 
   return (
     <section id="center">
@@ -38,4 +37,4 @@ function Measbylocpage({ onBack }) {
   )
 }
 
-export default Querypage
+export default Measbylocpage
