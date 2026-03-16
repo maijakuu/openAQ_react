@@ -8,8 +8,10 @@ function Querypage({ onBack }) {
   return (
     <section id="center">
       <div className="hero"></div>
-      <div className="menulaatikko">
+
       <h1>Search all data from a chosen day</h1>
+      <div className="laatikko">
+      
       <label htmlFor="location">Choose location:</label>
       <select
         id="location"
@@ -35,7 +37,7 @@ function Querypage({ onBack }) {
         max="2024-01-31"
       />
 
-      <button className="myButton" onClick={onBack}>
+      <button className="menuButton" onClick={onBack}>
         QUERY
       </button>
       <button className="myButton" onClick={onBack}>
