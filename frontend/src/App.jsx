@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import Frontpage from './Frontpage.jsx'
-import Selectpage from './Selectpage.jsx'
-import Datequerypage from './Datequerypage.jsx'
+import Frontpage from './pages/Frontpage.jsx'
+import Selectpage from './pages/Selectpage.jsx'
+import Datequerypage from './pages/Datequerypage.jsx'
 
 function App() {
   const [screen, setScreen] = useState("home");

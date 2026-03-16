@@ -1,4 +1,4 @@
-import './App.css'
+import '../components/App.css'
 
 function Frontpage({ onStart }) {
   return (

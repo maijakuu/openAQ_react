@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './App.css'
+import '../components/App.css'
 
 function Querypage({ onBack }) {
   const [location, setLocation] = useState('')
@@ -40,10 +40,10 @@ function Querypage({ onBack }) {
       <button className="menuButton" onClick={onBack}>
         QUERY
       </button>
+    </div>
       <button className="myButton" onClick={onBack}>
         RETURN
       </button>
-    </div>
     </section>
   )
 }
