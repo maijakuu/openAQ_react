@@ -8,10 +8,3 @@ createRoot(document.getElementById('root')).render(
       <App />
   </StrictMode>
 )
-
-
-/*TODO
-- Dropdown menu ulkoasu
-- kalenteriulkoasu
-- button ulkoasut
-*/

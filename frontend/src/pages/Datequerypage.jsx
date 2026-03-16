@@ -7,13 +7,12 @@ function Querypage({ onBack }) {
 
   return (
     <section id="center">
-      <div className="hero"></div>
 
       <h1>Search all data from a chosen day</h1>
       <div className="laatikko">
       
       <label htmlFor="location">Choose location:</label>
-      <select
+      <select className="selectmenu"
         id="location"
         value={location}
         onChange={(e) => setLocation(e.target.value)}
@@ -28,7 +27,7 @@ function Querypage({ onBack }) {
       </select>
       
       <label htmlFor="measurementDate">Choose a date from January 2024:</label>
-      <input
+      <input className="selectmenu"
         id="measurementDate"
         type="date"
         value={date}

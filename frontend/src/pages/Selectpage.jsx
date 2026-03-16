@@ -6,7 +6,6 @@ function Selectpage({ onBack, onSelect }) {
 
   return (
     <section id="center">
-      <div className="hero"></div>
       
       <h1>Choose your query:</h1>
       <div className="menulaatikko">

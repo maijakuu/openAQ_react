@@ -19,7 +19,7 @@ function Meanpage({ onBack, onSelect }) {
                                 PM25: Fine particulate matter 2.5 micrometers or smaller.
                                 SO2: Sulfur dioxide.`}>i</InfoTooltip>
         <label htmlFor="location">Choose location:</label>
-        <select
+        <select className="selectmenu"
           id="location"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
@@ -37,7 +37,7 @@ function Meanpage({ onBack, onSelect }) {
           <label htmlFor="sensor">Choose sensor type:</label>
         </div>
         
-        <select
+        <select className="selectmenu"
           id="sensor"
           value={sensor}
           onChange={(e) => setSensor(e.target.value)}

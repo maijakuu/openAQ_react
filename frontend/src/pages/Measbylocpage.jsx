@@ -12,7 +12,7 @@ function Measbylocpage({ onBack, onSelect }) {
       <div className="laatikko">
       
       <label htmlFor="location">Choose location:</label>
-      <select
+      <select className="selectmenu"
         id="location"
         value={location}
         onChange={(e) => setLocation(e.target.value)}
