@@ -18,6 +18,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+#FastAPI palauttaa JSON-yhteensopivaa dataa
+#fastAPI:lla myös oma app.get -funktio, gettiä ei siis tarvi eriksee määrittää kuten Flaskissa
 @app.get("/api/v1/locations")
 def root():
     return get_locations()
