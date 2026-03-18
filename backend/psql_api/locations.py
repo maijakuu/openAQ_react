@@ -20,7 +20,10 @@ def get_measurements_by_location():
                 locations = cursor.fetchall()
                 return locations
             
-"""SELECT location_id, COUNT(*) AS measurement_count
-FROM openaq.measurements
-GROUP BY location_id
-ORDER BY location_id;"""
+def get_amount_by_location(user_location):
+        with psycopg2.connect(database=os.getenv('DB'), user=os.getenv('DB_USER'), password=os.getenv('DB_PWD')) as conn:
+            with conn.cursor(cursor_factory=RealDictCursor) as cursor:
+                cursor.execute(f"SELECT COUNT(*) AS measurement_count FROM openaq.measurements WHERE location_id = %s", (user_location,))
+                locations = cursor.fetchall()
+                return locations
+

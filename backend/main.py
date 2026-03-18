@@ -1,9 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware #Estetään CORS-errorit
-from psql_api.sensors import get_sensors
-from psql_api.locations import get_locations
 from psql_api.measurements import get_measurements
-from psql_api.sensors import get_sensor_type
+from psql_api.sensors import get_sensors, get_sensor_type
+from psql_api.locations import get_amount_by_location, get_locations
 
 app = FastAPI() #FastAPI:n joku oma kirjasto, antaa terminaaliin docsit yms.
 
@@ -37,3 +36,8 @@ def root():
 @app.get("/api/v1/sensor_types")
 def root():
     return get_sensor_type()
+
+@app.get("/api/v1/count_location/{user_location}")
+def get_count_location(user_location: int):
+    
+    return get_amount_by_location(user_location)
