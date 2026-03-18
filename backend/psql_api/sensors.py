@@ -11,4 +11,4 @@ def get_sensors():
             cursor.execute("SELECT * FROM openaq.sensors")
             sensors = cursor.fetchall()
             return sensors
-        
+

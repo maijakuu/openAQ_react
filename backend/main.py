@@ -8,6 +8,7 @@ app = FastAPI() #FastAPI:n joku oma kirjasto, antaa terminaaliin docsit yms.
 
 origins = [
     "http://localhost:5174", #Lisätään sallittu portti
+    "http://localhost:5173"
 ]
 
 app.add_middleware(

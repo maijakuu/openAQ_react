@@ -1,9 +1,29 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import '../components/App.css'
 
 function Querypage({ onBack }) {
   const [location, setLocation] = useState('')
   const [date, setDate] = useState('')
+  const [locations, setLocations] = useState([])
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+  async function fetchLocations() {
+    try {
+      const response = await fetch('http://localhost:8000/api/v1/locations')
+      if (!response.ok) {
+        throw new Error(`HTTP error ${response.status}`)
+      }
+      const data = await response.json()
+      setLocations(data)
+    } catch (err) {
+      setError(err.message)
+    }
+  }
+
+  fetchLocations()
+
+  }, [])
 
   return (
     <section id="center">
@@ -17,13 +37,12 @@ function Querypage({ onBack }) {
         value={location}
         onChange={(e) => setLocation(e.target.value)}
       >
-        <option value="">-- Select sensor location --</option>
-        <option value="2975">2975: Vartiokylä, Huivipolku</option>
-        <option value="2998">2998: Leppävaara 4</option>
-        <option value="4529">4529: Tikkurila 3</option>
-        <option value="4588">4588: Mannerheimintie</option>
-        <option value="4593">4593: Kallio 2</option>
-        <option value="9287">9287: Mäkelänkatu</option>
+          <option value="">-- Select sensor location --</option>
+          {locations.map((loc) => (
+            <option key={loc.location_id} value={loc.location_id}>
+              {loc.location_id}: {loc.city}
+            </option> 
+          ))}
       </select>
       
       <label htmlFor="measurementDate">Choose a date from January 2024:</label>
