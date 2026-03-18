@@ -1,11 +1,48 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import '../components/App.css'
 import InfoTooltip from '../components/InfoTooltip.jsx'
 
 function Meanpage({ onBack, onSelect }) {
   const [location, setLocation] = useState('')
-  const [sensor, setSensor] = useState('')
+  const [locations, setLocations] = useState([])
+  const [error, setError] = useState(null)
+  const [sensor, setSensortype] = useState('')
+  const [sensors, setSensortypes] = useState([])
 
+  useEffect(() => {
+    async function fetchLocations() {
+      try {
+        const response = await fetch('http://localhost:8000/api/v1/locations')
+        if (!response.ok) {
+          throw new Error(`HTTP error ${response.status}`)
+        }
+        const data = await response.json()
+        setLocations(data)
+      } catch (err) {
+        setError(err.message)
+      }
+    }
+
+    fetchLocations()
+  }, [])
+
+  useEffect(() => {
+    async function fetchSensortypes() {
+      try {
+        const response = await fetch('http://localhost:8000/api/v1/sensor_types')
+        if (!response.ok) {
+          throw new Error(`HTTP error ${response.status}`)
+        }
+        const data = await response.json()
+        setSensortypes(data)
+      } catch (err) {
+        setError(err.message)
+      }
+    }
+
+    fetchSensortypes()
+  }, [])
+  
   return (
     <section id="center">
     <div className="titleblock">
@@ -24,13 +61,12 @@ function Meanpage({ onBack, onSelect }) {
           value={location}
           onChange={(e) => setLocation(e.target.value)}
         >
-          <option value="">-- Select sensor location --</option>
-          <option value="2975">2975: Vartiokylä, Huivipolku</option>
-          <option value="2998">2998: Leppävaara 4</option>
-          <option value="4529">4529: Tikkurila 3</option>
-          <option value="4588">4588: Mannerheimintie</option>
-          <option value="4593">4593: Kallio 2</option>
-          <option value="9287">9287: Mäkelänkatu</option>
+        <option value="">-- Select sensor location --</option>
+        {locations.map((loc) => (
+          <option key={loc.location_id} value={loc.location_id}>
+            {loc.location_id}: {loc.city}
+          </option> 
+          ))}
         </select>
 
         <div className="labelRow">
@@ -40,14 +76,14 @@ function Meanpage({ onBack, onSelect }) {
         <select className="selectmenu"
           id="sensor"
           value={sensor}
-          onChange={(e) => setSensor(e.target.value)}
+          onChange={(e) => setSensortype(e.target.value)}
         >
-          <option value="">-- Select sensor type --</option>
-          <option value="no2">NO₂</option>
-          <option value="o3">O₃</option>
-          <option value="pm10">PM10</option>
-          <option value="pm25">PM2.5</option>
-          <option value="so2">SO₂</option>
+        <option value="">-- Select sensor parameter --</option>
+        {sensors.map((sens) => (
+          <option key={sens.sensor_id} value={sens.sensor_id}>
+           {sens.parameter}
+          </option> 
+          ))}
         </select>
 
         <button className="menuButton" onClick={onBack}>
