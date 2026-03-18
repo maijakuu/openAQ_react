@@ -1,5 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware #Estetään CORS-errorit
+from psql_api.sensors import get_sensors
+from psql_api.locations import get_locations
+from psql_api.measurements import get_measurements
 
 app = FastAPI() #FastAPI:n joku oma kirjasto, antaa terminaaliin docsit yms.
 
@@ -15,6 +18,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
+@app.get("/api/v1/locations")
 def root():
-    return {"message": "Hello World"}
+    return get_locations()
+
+@app.get("/api/v1/sensors")
+def root():
+    return get_sensors()
+
+@app.get("/api/v1/measurements")
+def root():
+    return get_measurements()
