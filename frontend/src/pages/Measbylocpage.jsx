@@ -3,11 +3,12 @@ import '../components/App.css'
 
 function Measbylocpage({ onBack, onSelect }) {
   const [location, setLocation] = useState('')
-  const [date, setDate] = useState('')
   const [locations, setLocations] = useState([])
   const [error, setError] = useState(null)
+  const [count, setCount] = useState(null)
 
   useEffect(() => {
+
   async function fetchLocations() {
     try {
       const response = await fetch('http://localhost:8000/api/v1/locations')
@@ -24,6 +25,26 @@ function Measbylocpage({ onBack, onSelect }) {
   fetchLocations()
 
   }, [])
+
+  async function handleQuery() {
+    if (!location) {
+      setError('Choose a location first')
+      return
+    }
+
+    try {
+      setError(null)
+      const response = await fetch(`http://localhost:8000/api/v1/count_location/${location}`)
+      if (!response.ok) {
+        throw new Error(`HTTP error ${response.status}`)
+      }
+      const data = await response.json()
+      setCount(data[0].measurement_count)
+    } catch (err) {
+      setError(err.message)
+    }
+  }
+
   return (
     <section id="center">
       <div className="hero"></div>
@@ -45,9 +66,13 @@ function Measbylocpage({ onBack, onSelect }) {
           ))}
       </select>
       
-      <button className="menuButton" onClick={onBack}>
+      <button className="menuButton" onClick={handleQuery}>
         QUERY
       </button>
+
+        {count !== null && <p>Measurement count: {count}</p>}
+        {error && <p>Error: {error}</p>}
+
     </div>
       <button className="myButton" onClick={onBack}>
         RETURN
