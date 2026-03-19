@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from datetime import date
 from fastapi.middleware.cors import CORSMiddleware #Estetään CORS-errorit
-from psql_api.measurements import get_measurements
+from psql_api.measurements import get_measurements, get_measurements_mean
 from psql_api.sensors import get_sensors, get_sensor_type
 from psql_api.locations import get_amount_by_location, get_locations, get_measurements_by_date
 
@@ -48,3 +48,7 @@ def get_count_location(user_location: int):
 @app.get("/api/v1/location_by_date/{user_location}/{user_date}")
 def get__meas_date(user_location: int, user_date: date):
     return get_measurements_by_date(user_location, user_date)
+
+@app.get("/api/v1/location_by_date/{user_location}/{user_date}/{user_sensor}")
+def get__mean(user_location: int, user_date: date, user_sensor: int):
+    return get_measurements_mean(user_location, user_date, user_sensor)
