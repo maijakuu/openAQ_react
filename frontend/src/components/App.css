@@ -5,12 +5,12 @@
 }
 
 .myButton{
-  background-color: rgb(56, 38, 124);
+  background-color: rgb(63, 36, 161);
   color: white;
   border: none;
   padding: 12px 20px;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 20px;
   cursor: pointer;
   transition: 0.2s;
   margin-top: 20px;
@@ -48,6 +48,8 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  border: 1px rgba(0, 0, 0, 0.678);
+ 
 }
 
 .menulaatikko {
@@ -64,7 +66,6 @@
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  
 }
 
 .tooltip {
@@ -123,24 +124,45 @@
   color: black;
 }
 
-.infobox
-{
-  background: rgba(255, 255, 255, 0.45);
-  padding: 32px 48px;
-  border-radius: 24px;
-  gap: 15px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
-  backdrop-filter: blur(8px);
-  text-align: center;
+.infopanel {
   width: 100%;
-  text-align: left;
-  font-weight: 300px;
-  max-width: 600px;
-  flex: none;
+  max-width: 400px;
+  display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 10px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  margin: 14px 0;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgb(166, 98, 255);
+  border: 1px solid rgba(0, 0, 0, 0.678);
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
+
+.infopanel summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  list-style: none;
+  cursor: pointer;
+  padding: 18px 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+  background: rgba(161, 151, 255, 0.85);
+}
+
+.infopanel summary::-webkit-details-marker {
+  display: none;
+}
+
+.paneltext {
+  padding: 18px 22px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #1e293b;
+  line-height: 1.6;
+}
+
 
 .results-table-wrap {
   margin-top: 20px;

@@ -31,8 +31,11 @@ function Meanpage({ onBack, onSelect }) {
 
   useEffect(() => {
     async function fetchSensortypes() {
+      if (!location){
+        setSensortypes([]) 
+        return}
       try {
-        const response = await fetch('http://localhost:8000/api/v1/sensors')
+        const response = await fetch(`http://localhost:8000/api/v1/specific_sensor/${location}`)
         if (!response.ok) {
           throw new Error(`HTTP error ${response.status}`)
         }
@@ -43,8 +46,7 @@ function Meanpage({ onBack, onSelect }) {
       }
     }
 
-    fetchSensortypes()
-  }, [])
+    fetchSensortypes()}, [location])
   
     async function handleQuery() { /*Tehdään query databasesta*/
     if (!location || !user_date || !user_sensor) { /*If NOlocation OR NOdate*/ 
@@ -70,7 +72,7 @@ function Meanpage({ onBack, onSelect }) {
   return (
     <section id="center">
     <div className="titleblock">
-    <h1>Get measurement mean values by location and sensor</h1>
+    <h1>Get measurement mean values by location, sensor and date</h1>
     </div>
 
       <div className="laatikko">
@@ -123,7 +125,7 @@ function Meanpage({ onBack, onSelect }) {
         <button className="menuButton" onClick={handleQuery}>
           QUERY
         </button>
-        
+
         {searched && result == null && <p>No matching measurements found</p>}
         {result !== null && <p>Mean value: {result}</p>}
         {error && <p>Error: {error}</p>}
