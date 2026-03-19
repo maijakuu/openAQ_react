@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react'
 import '../components/App.css'
 
 function Querypage({ onBack }) {
-  const [location, setLocation] = useState('')
-  const [date, setDate] = useState('')
-  const [locations, setLocations] = useState([])
+  const [location, setLocation] = useState('') /*Käyttäjäsyöte*/ 
+  const [user_date, setDate] = useState('') /*Käyttäjäsyöte*/ 
+  const [locations, setLocations] = useState([]) /*Databasen locations listana*/ 
   const [error, setError] = useState(null)
+  const [results, setResults] = useState([])/*Databasen tulokset listana*/
 
   useEffect(() => {
+
   async function fetchLocations() {
     try {
       const response = await fetch('http://localhost:8000/api/v1/locations')
@@ -24,6 +26,28 @@ function Querypage({ onBack }) {
   fetchLocations()
 
   }, [])
+
+  async function handleQuery() {
+    if (!location || !user_date) { /*If NOlocation OR NOdate*/ 
+      setError('Choose a location and date first')
+      return
+    }
+
+    try {
+      setError(null)
+
+      const response = await fetch(`http://localhost:8000/api/v1/location_by_date/${location}/${user_date}`)
+      if (!response.ok) {
+        throw new Error(`HTTP error ${response.status}`)
+      }
+
+      const data = await response.json()
+      setResults(data || []) /*Tämä state jotta saadaan tulokset renderöitya*/
+    } catch (err) {
+      setError(err.message)
+    }
+  }
+
 
   return (
     <section id="center">
@@ -49,19 +73,31 @@ function Querypage({ onBack }) {
       <input className="selectmenu"
         id="measurementDate"
         type="date"
-        value={date}
+        value={user_date}
         onChange={(e) => setDate(e.target.value)}
         min="2024-01-01"
         max="2024-01-31"
       />
 
-      <button className="menuButton" onClick={onBack}>
+      <button className="menuButton" onClick={handleQuery}>
         QUERY
       </button>
+
+       {error && <p>Error: {error}</p>}
+
+        {results.length > 0 && (
+          <ul>
+            {results.map((row, index) => (
+              <li key={index}>{JSON.stringify(row)}</li>
+            ))}
+          </ul>
+        )}
     </div>
+
       <button className="myButton" onClick={onBack}>
         RETURN
       </button>
+
     </section>
   )
 }
