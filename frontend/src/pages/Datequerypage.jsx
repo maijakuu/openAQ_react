@@ -10,9 +10,9 @@ function Querypage({ onBack }) {
 
   useEffect(() => {
 
-  async function fetchLocations() {
+  async function fetchLocations() {/*Haetaan Locations databasesta*/
     try {
-      const response = await fetch('http://localhost:8000/api/v1/locations')
+      const response = await fetch('http://localhost:8000/api/v1/locations')/*Kutsutaan endpointia*/
       if (!response.ok) {
         throw new Error(`HTTP error ${response.status}`)
       }
@@ -22,12 +22,10 @@ function Querypage({ onBack }) {
       setError(err.message)
     }
   }
-
   fetchLocations()
-
   }, [])
 
-  async function handleQuery() {
+  async function handleQuery() { /*Tehdään query databasesta*/
     if (!location || !user_date) { /*If NOlocation OR NOdate*/ 
       setError('Choose a location and date first')
       return
@@ -36,18 +34,17 @@ function Querypage({ onBack }) {
     try {
       setError(null)
 
-      const response = await fetch(`http://localhost:8000/api/v1/location_by_date/${location}/${user_date}`)
+      const response = await fetch(`http://localhost:8000/api/v1/location_by_date/${location}/${user_date}`)/*Kutsutaan endpointia*/
       if (!response.ok) {
         throw new Error(`HTTP error ${response.status}`)
       }
 
       const data = await response.json()
-      setResults(data || []) /*Tämä state jotta saadaan tulokset renderöitya*/
+      setResults(data) /*Tämä state jotta saadaan tulokset renderöitya*/
     } catch (err) {
       setError(err.message)
     }
   }
-
 
   return (
     <section id="center">
@@ -63,17 +60,17 @@ function Querypage({ onBack }) {
       >
           <option value="">-- Select sensor location --</option>
           {locations.map((loc) => (
-            <option key={loc.location_id} value={loc.location_id}>
-              {loc.location_id}: {loc.city}
+            <option key={loc.location_id} value={loc.location_id}> {/* Otetaan location id ja käytetään sitä määräävänä arvona ja valuena. value tallennetaan myöhempää käyttöä varten */}
+           {loc.location_id}: {loc.city}  {/* Tämä näytetään käyttäjälle */}
             </option> 
           ))}
       </select>
-      
+  
       <label htmlFor="measurementDate">Choose a date from January 2024:</label>
       <input className="selectmenu"
         id="measurementDate"
         type="date"
-        value={user_date}
+        value={user_date} /* tallennettava arvo */
         onChange={(e) => setDate(e.target.value)}
         min="2024-01-01"
         max="2024-01-31"
@@ -83,12 +80,12 @@ function Querypage({ onBack }) {
         QUERY
       </button>
     </div>
-    
+
       <button className="myButton" onClick={onBack}>
         RETURN
       </button>
 
-       {error && <p>Error: {error}</p>}
+       {error && <p>Error: {error}</p>} {/*Jos errorilla on oikea errorkoodi, renderöidään <p> sisällä olevat osuudet. Muuten tyhjä.*/}
 
           {results?.length > 0 && (
             <div className="results-table-wrap">
@@ -102,12 +99,11 @@ function Querypage({ onBack }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {results.map((row, index) => (
-                    <tr key={row.id ?? index}>
+                  {results.map((row, index) => ( /* mappaa database läpi, row= item, index= itemin numero */
+                    <tr key={row.id ?? index}> {/* Käytä rowid key:na, muuten käytä indexiä */}
                       <td>{row.location_id}</td>
                       <td>{row.sensors_id}</td>
-                          {new Date(row.datetime).toLocaleTimeString('fi-FI', {
-                            hour: '2-digit',minute: '2-digit', second: '2-digit'})}
+                      <td>{new Date(row.datetime).toLocaleTimeString('fi-FI', {hour: '2-digit',minute: '2-digit', second: '2-digit'})}</td>
                       <td>{row.value}</td>
                     </tr>
                   ))}
@@ -119,5 +115,4 @@ function Querypage({ onBack }) {
     </section>
   )
 }
-
 export default Querypage
