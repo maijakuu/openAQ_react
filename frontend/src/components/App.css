@@ -126,7 +126,7 @@
 
 .infopanel {
   width: 100%;
-  max-width: 400px;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
@@ -170,7 +170,7 @@
   width: 100%;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgb(255, 255, 255);
 }
 
 .results-table {
@@ -183,7 +183,7 @@
 .results-table td {
   padding: 12px 14px;
   text-align: left;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgb(255, 255, 255, 0.12);
 }
 
 .results-table th {
@@ -193,5 +193,5 @@
 }
 
 .results-table tr:hover {
-  background: rgba(247, 207, 255, 0.226);
+  background: rgba(180, 153, 255, 0.226);
 }

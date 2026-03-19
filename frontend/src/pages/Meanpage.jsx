@@ -76,12 +76,8 @@ function Meanpage({ onBack, onSelect }) {
     </div>
 
       <div className="laatikko">
-                                <InfoTooltip text={`NO2: Nitrogen dioxide.
-                                O3: Ozone.
-                                PM10: Particulate matter 10 micrometers or smaller.
-                                PM25: Fine particulate matter 2.5 micrometers or smaller.
-                                SO2: Sulfur dioxide.`}>i</InfoTooltip>
-        <label htmlFor="location">Choose location:</label>
+                                <InfoTooltip text={`Due to the large number of parameters, the query has been modified to show only the sensors available at each location. Otherwise, most queries would return null, since each location has only specific sensors`}>i</InfoTooltip>
+        <label htmlFor="location">Choose location by ID:</label>
         <select className="selectmenu"
           id="location"
           value={location}
@@ -127,7 +123,7 @@ function Meanpage({ onBack, onSelect }) {
         </button>
 
         {searched && result == null && <p>No matching measurements found</p>}
-        {result !== null && <p>Mean value: {result}</p>}
+        {result !== null && <p>Mean value: {Number(result).toFixed(2)}</p>}
         {error && <p>Error: {error}</p>}
 
       </div>

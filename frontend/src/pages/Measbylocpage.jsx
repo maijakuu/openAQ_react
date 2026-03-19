@@ -48,7 +48,7 @@ function Measbylocpage({ onBack, onSelect }) {
   return (
     <section id="center">
 
-      <h1>Search all data  by sensor</h1>
+      <h1>Search the number of measurements by location</h1>
       <div className="laatikko">
       
       <label htmlFor="location">Choose location:</label>

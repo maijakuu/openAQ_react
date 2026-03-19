@@ -1,5 +1,5 @@
 import '../components/App.css'
-import { MessageCircleQuestionMark, SquareCode, Github, Search, ArrowLeft, Info, Database } from 'lucide-react'
+import { MessageCircleQuestionMark, SquareCode, Github, Component, Search, ArrowLeft, Info, Database } from 'lucide-react'
 import {  } from 'lucide-react'
 function Frontpage({ onStart }) {
   return (
@@ -47,6 +47,20 @@ The main goal of this project was to build a functional database based on OpenAQ
  The final result is a simple web application that can retrieve data from the database and display it in a readable format.
 
           </p>
+        </div>
+      </details>
+
+        <details className="infopanel" name="frontinfo">
+        <summary><Component size={25}/>Upcoming features and updates (If time allows)</summary>
+        <div className="paneltext">
+          <p>
+            <ul>
+              <li>Update on outer appearance, full mobile-responsive layout.</li>
+              <li>The possibility for more API-calls, more precise utilization of the database.</li>
+              <li>Extending the database to cover more information available on OpenAQ.</li>
+              </ul>
+
+</p>
         </div>
       </details>
 
