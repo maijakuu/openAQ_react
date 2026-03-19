@@ -82,21 +82,39 @@ function Querypage({ onBack }) {
       <button className="menuButton" onClick={handleQuery}>
         QUERY
       </button>
-
-       {error && <p>Error: {error}</p>}
-
-        {results.length > 0 && (
-          <ul>
-            {results.map((row, index) => (
-              <li key={index}>{JSON.stringify(row)}</li>
-            ))}
-          </ul>
-        )}
     </div>
-
+    
       <button className="myButton" onClick={onBack}>
         RETURN
       </button>
+
+       {error && <p>Error: {error}</p>}
+
+          {results?.length > 0 && (
+            <div className="results-table-wrap">
+              <table className="results-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Location ID</th>
+                    <th scope="col">Sensor type ID</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {results.map((row, index) => (
+                    <tr key={row.id ?? index}>
+                      <td>{row.location_id}</td>
+                      <td>{row.sensors_id}</td>
+                          {new Date(row.datetime).toLocaleTimeString('fi-FI', {
+                            hour: '2-digit',minute: '2-digit', second: '2-digit'})}
+                      <td>{row.value}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
 
     </section>
   )
