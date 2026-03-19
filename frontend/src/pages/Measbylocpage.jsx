@@ -47,7 +47,6 @@ function Measbylocpage({ onBack, onSelect }) {
 
   return (
     <section id="center">
-      <div className="hero"></div>
 
       <h1>Search all data  by sensor</h1>
       <div className="laatikko">

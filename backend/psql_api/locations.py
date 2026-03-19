@@ -5,6 +5,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+#=========================================================================================#
+#                               LOCATIONS SQL-Queryt                           
+#=========================================================================================#
 def get_locations():
     with psycopg2.connect(database=os.getenv('DB'), user=os.getenv('DB_USER'), password=os.getenv('DB_PWD')) as conn:
         with conn.cursor(cursor_factory=RealDictCursor) as cursor:
@@ -27,3 +30,7 @@ def get_amount_by_location(user_location):
                 locations = cursor.fetchall()
                 return locations
 
+def get_measurements_by_date(user_location, user_date):
+        with psycopg2.connect(database=os.getenv('DB'), user=os.getenv('DB_USER'), password=os.getenv('DB_PWD')) as conn:
+            with conn.cursor(cursor_factory=RealDictCursor) as cursor:  
+                cursor.execute("SELECT * FROM openaq.measurements WHERE location_id = %s AND DATE(datetime) = %s",(user_location, user_date))

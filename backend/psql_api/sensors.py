@@ -5,6 +5,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
+#=========================================================================================#
+#                                   SENSORS SQL-Queryt                           
+#=========================================================================================#
 def get_sensors():
     with psycopg2.connect(database=os.getenv('DB'), user=os.getenv('DB_USER'), password=os.getenv('DB_PWD')) as conn:
         with conn.cursor(cursor_factory=RealDictCursor) as cursor:
