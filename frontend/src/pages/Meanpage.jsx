@@ -10,6 +10,7 @@ function Meanpage({ onBack, onSelect }) {
   const [sensors, setSensortypes] = useState([])
   const [result, setResult] = useState(null)/*keskiarvo alustetaan null*/
   const [user_date, setDate] = useState('')
+  const [sensor_unit, setUnit] = useState('')
   const [searched, setSearched] = useState(false)
 
   useEffect(() => {
@@ -33,8 +34,16 @@ function Meanpage({ onBack, onSelect }) {
     async function fetchSensortypes() {
       if (!location){
         setSensortypes([]) 
+        setSensortype('')
+        setUnit('')
+        setResult(null)
+
         return}
       try {
+        setSensortype('')
+        setUnit('')
+        setResult(null)
+
         const response = await fetch(`http://localhost:8000/api/v1/specific_sensor/${location}`)
         if (!response.ok) {
           throw new Error(`HTTP error ${response.status}`)
@@ -48,6 +57,26 @@ function Meanpage({ onBack, onSelect }) {
 
     fetchSensortypes()}, [location])
   
+    
+    useEffect(() => {
+    async function fetchSensorUnit() {
+      if (!user_sensor){
+        setUnit('') 
+        return}
+      try {
+        const response = await fetch(`http://localhost:8000/api/v1/sensor_unit/${user_sensor}`)
+        if (!response.ok) {
+          throw new Error(`HTTP error ${response.status}`)
+        }
+        const data = await response.json()
+        setUnit(data.sensor_unit)
+      } catch (err) {
+        setError(err.message)
+      }
+    }
+
+    fetchSensorUnit()}, [user_sensor])
+
     async function handleQuery() { /*Tehdään query databasesta*/
     if (!location || !user_date || !user_sensor) { /*If NOlocation OR NOdate*/ 
       setError('Choose a location, date and sensor first')
@@ -123,7 +152,7 @@ function Meanpage({ onBack, onSelect }) {
         </button>
 
         {searched && result == null && <p>No matching measurements found</p>}
-        {result !== null && <p>Mean value: {Number(result).toFixed(2)}</p>}
+        {result !== null && <p>Mean value: {Number(result).toFixed(2)} {sensor_unit}</p>}
         {error && <p>Error: {error}</p>}
 
       </div>
