@@ -6,8 +6,11 @@ function Meanpage({ onBack, onSelect }) {
   const [location, setLocation] = useState('')
   const [locations, setLocations] = useState([])
   const [error, setError] = useState(null)
-  const [sensor, setSensortype] = useState('')
+  const [user_sensor, setSensortype] = useState('')
   const [sensors, setSensortypes] = useState([])
+  const [result, setResult] = useState(null)/*keskiarvo alustetaan null*/
+  const [user_date, setDate] = useState('')
+  const [searched, setSearched] = useState(false)
 
   useEffect(() => {
     async function fetchLocations() {
@@ -29,7 +32,7 @@ function Meanpage({ onBack, onSelect }) {
   useEffect(() => {
     async function fetchSensortypes() {
       try {
-        const response = await fetch('http://localhost:8000/api/v1/sensor_types')
+        const response = await fetch('http://localhost:8000/api/v1/sensors')
         if (!response.ok) {
           throw new Error(`HTTP error ${response.status}`)
         }
@@ -43,6 +46,27 @@ function Meanpage({ onBack, onSelect }) {
     fetchSensortypes()
   }, [])
   
+    async function handleQuery() { /*Tehdään query databasesta*/
+    if (!location || !user_date || !user_sensor) { /*If NOlocation OR NOdate*/ 
+      setError('Choose a location, date and sensor first')
+      return
+    }
+
+    try {
+      setError(null)
+      setSearched(true)
+
+      const response = await fetch(`http://localhost:8000/api/v1/mean/${location}/${user_date}/${user_sensor}`)/*Kutsutaan endpointia*/
+      if (!response.ok) {
+        throw new Error(`HTTP error ${response.status}`)
+      }
+
+      const data = await response.json()
+      setResult(data.avg_value) /*Tämä state jotta saadaan tulokset renderöitya*/
+    } catch (err) {
+      setError(err.message)
+    }
+  }
   return (
     <section id="center">
     <div className="titleblock">
@@ -70,25 +94,40 @@ function Meanpage({ onBack, onSelect }) {
         </select>
 
         <div className="labelRow">
-          <label htmlFor="sensor">Choose sensor type:</label>
+          <label htmlFor="sensor">Choose sensor by ID:</label>
         </div>
         
         <select className="selectmenu"
           id="sensor"
-          value={sensor}
+          value={user_sensor}
           onChange={(e) => setSensortype(e.target.value)}
         >
-        <option value="">-- Select sensor parameter --</option>
+        <option value="">-- Select sensor --</option>
         {sensors.map((sens) => (
-          <option key={sens.sensor_id} value={sens.sensor_id}>
-           {sens.parameter}
+          <option key={sens.sensors_id} value={sens.sensors_id}>
+           {sens.sensors_id}
           </option> 
           ))}
         </select>
 
-        <button className="menuButton" onClick={onBack}>
+        <label htmlFor="measurementDate">Choose a date from January 2024:</label>
+          <input className="selectmenu"
+            id="measurementDate"
+            type="date"
+            value={user_date} /* tallennettava arvo */
+            onChange={(e) => setDate(e.target.value)}
+            min="2024-01-01"
+            max="2024-01-31"
+          />
+
+        <button className="menuButton" onClick={handleQuery}>
           QUERY
         </button>
+        
+        {searched && result == null && <p>No matching measurements found</p>}
+        {result !== null && <p>Mean value: {result}</p>}
+        {error && <p>Error: {error}</p>}
+
       </div>
 
       <button className="myButton" onClick={onBack}>

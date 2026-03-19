@@ -30,16 +30,12 @@ def root():
     return get_locations()
 
 @app.get("/api/v1/sensors")
-def root():
+def sensors():
     return get_sensors()
 
 @app.get("/api/v1/measurements")
 def root():
     return get_measurements()
-
-@app.get("/api/v1/sensor_types")
-def root():
-    return get_sensor_type()
 
 @app.get("/api/v1/count_location/{user_location}")
 def get_count_location(user_location: int):
@@ -49,6 +45,6 @@ def get_count_location(user_location: int):
 def get__meas_date(user_location: int, user_date: date):
     return get_measurements_by_date(user_location, user_date)
 
-@app.get("/api/v1/location_by_date/{user_location}/{user_date}/{user_sensor}")
+@app.get("/api/v1/mean/{user_location}/{user_date}/{user_sensor}")
 def get__mean(user_location: int, user_date: date, user_sensor: int):
     return get_measurements_mean(user_location, user_date, user_sensor)
