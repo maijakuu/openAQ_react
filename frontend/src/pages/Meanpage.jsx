@@ -13,6 +13,9 @@ function Meanpage({ onBack, onSelect }) {
   const [sensor_unit, setUnit] = useState('')
   const [searched, setSearched] = useState(false)
 
+/*====================================================================================== */
+/*                          useEffect-API Hooks                                          */
+/*====================================================================================== */
   useEffect(() => {
     async function fetchLocations() {
       try {
@@ -30,6 +33,7 @@ function Meanpage({ onBack, onSelect }) {
     fetchLocations()
   }, [])
 
+/*====================================================================================== */
   useEffect(() => {
     async function fetchSensortypes() {
       if (!location){
@@ -56,8 +60,9 @@ function Meanpage({ onBack, onSelect }) {
     }
 
     fetchSensortypes()}, [location])
+
+  /*====================================================================================== */
   
-    
     useEffect(() => {
     async function fetchSensorUnit() {
       if (!user_sensor){
@@ -76,6 +81,11 @@ function Meanpage({ onBack, onSelect }) {
     }
 
     fetchSensorUnit()}, [user_sensor])
+    
+
+  /*====================================================================================== */
+/*                                                                                           */
+  /*====================================================================================== */
 
     async function handleQuery() { /*Tehdään query databasesta*/
     if (!location || !user_date || !user_sensor) { /*If NOlocation OR NOdate*/ 
@@ -98,6 +108,8 @@ function Meanpage({ onBack, onSelect }) {
       setError(err.message)
     }
   }
+/*====================================================================================== */
+
   return (
     <section id="center">
     <div className="titleblock">
