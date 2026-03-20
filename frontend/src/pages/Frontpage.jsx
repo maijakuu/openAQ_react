@@ -10,7 +10,7 @@ function Frontpage({ onStart }) {
         <h4><a href="https://github.com/maijakuu" target="_blank" rel="noopener noreferrer"><Github size={25}/>maijakuu</a></h4>
       </div>
         <button className="startButton" onClick={onStart}>
-          START   <CircleChevronRight size={36} color="#000000" strokeWidth={2.75} />
+          <b>START </b>  <CircleChevronRight size={36} color="#000000" strokeWidth={2.75} />
         </button>
       <details className="infopanel" name="frontinfo">
         <summary><MessageCircleQuestionMark size={25}/>What is OpenAQ?</summary>
