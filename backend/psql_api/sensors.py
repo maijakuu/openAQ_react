@@ -22,3 +22,10 @@ def get_sensor_units(user_sensor):
             cursor.execute("SELECT units AS sensor_unit FROM openaq.sensors WHERE sensors_id = %s", (user_sensor,))
             sensor_unit = cursor.fetchone()
             return sensor_unit
+
+def get_sensor_parameter(user_sensor):
+    with psycopg2.connect(database=os.getenv('DB'), user=os.getenv('DB_USER'), password=os.getenv('DB_PWD')) as conn:
+        with conn.cursor(cursor_factory=RealDictCursor) as cursor:
+            cursor.execute("SELECT parameter AS sensor_parameter FROM openaq.sensors WHERE sensors_id = %s", (user_sensor,))
+            sensor_parameter = cursor.fetchone()
+            return sensor_parameter

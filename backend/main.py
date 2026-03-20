@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from datetime import date
 from fastapi.middleware.cors import CORSMiddleware #Estetään CORS-errorit
 from psql_api.measurements import get_measurements, get_measurements_mean, get_sensors_by_location
-from psql_api.sensors import get_sensors, get_sensor_units
+from psql_api.sensors import get_sensors, get_sensor_units, get_sensor_parameter
 from psql_api.locations import get_amount_by_location, get_locations, get_measurements_by_date
 
 app = FastAPI() #FastAPI:n joku oma kirjasto, antaa terminaaliin docsit yms.
@@ -56,3 +56,7 @@ def get__specific_sensor(user_location: int):
 @app.get("/api/v1/sensor_unit/{user_sensor}")
 def get__units(user_sensor: int):
     return get_sensor_units(user_sensor)
+
+@app.get("/api/v1/sensor_parameter/{user_sensor}")
+def get__units(user_sensor: int):
+    return get_sensor_parameter(user_sensor)

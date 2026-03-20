@@ -13,6 +13,7 @@ function Meanpage({ onBack }) {
   const [result, setResult] = useState(null)/*keskiarvo alustetaan null*/
   const [user_date, setDate] = useState('')/*Käyttäjän valitsema vaihtoehto*/ 
   const [sensor_unit, setUnit] = useState('')/*Unitin tallennuspaikka*/
+  const [sensor_parameter, setParameter] = useState('')
   const [searched, setSearched] = useState(false)
 
 /*====================================================================================== */
@@ -85,6 +86,24 @@ function Meanpage({ onBack }) {
     fetchSensorUnit()}, [user_sensor])
 
 
+    useEffect(() => {
+    async function fetchSensorParameter() {
+      if (!user_sensor){
+        setParameter('') 
+        return}
+      try {
+        const response = await fetch(`http://localhost:8000/api/v1/sensor_parameter/${user_sensor}`)
+        if (!response.ok) {
+          throw new Error(`HTTP error ${response.status}`)
+        }
+        const data = await response.json()
+        setParameter(data.sensor_parameter)
+      } catch (err) {
+        setError(err.message)
+      }
+    }
+
+    fetchSensorParameter()}, [user_sensor])
   /*====================================================================================== */
 /*                                                                                           */
   /*====================================================================================== */
@@ -168,7 +187,7 @@ function Meanpage({ onBack }) {
         {searched && result == null && <p>No matching measurements found</p>}
         
         {result !== null && <p>Mean value: {Number(result).toFixed(2)} {sensor_unit}</p>}
-        {searched && result !== null && <p>Parameter:</p>}
+        {searched && result !== null && <p>Parameter: {sensor_parameter}</p>}
         {error && <p>Error: {error}</p>}
 
       </div>
