@@ -26,7 +26,7 @@ function Selectpage({ onBack, onSelect }) {
         START
       </button>
       </div>
-      <button className="myButton" onClick={onBack}>
+      <button className="startButton" onClick={onBack}>
         RETURN
       </button>
     

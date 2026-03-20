@@ -1,6 +1,5 @@
 import '../components/App.css'
-import { MessageCircleQuestionMark, SquareCode, Github, Component, Search, ArrowLeft, Info, Database } from 'lucide-react'
-import {  } from 'lucide-react'
+import { MessageCircleQuestionMark, SquareCode, Github, Component, Search, ArrowLeft, Info, Database, CircleChevronRight } from 'lucide-react'
 function Frontpage({ onStart }) {
   return (
     <section id="center">
@@ -10,7 +9,9 @@ function Frontpage({ onStart }) {
         <h4>Course project 2026</h4>
         <h4><a href="https://github.com/maijakuu" target="_blank" rel="noopener noreferrer"><Github size={25}/>maijakuu</a></h4>
       </div>
-
+        <button className="startButton" onClick={onStart}>
+          START   <CircleChevronRight size={36} color="#000000" strokeWidth={2.75} />
+        </button>
       <details className="infopanel" name="frontinfo">
         <summary><MessageCircleQuestionMark size={25}/>What is OpenAQ?</summary>
         <div className="paneltext">
@@ -63,10 +64,6 @@ The main goal of this project was to build a functional database based on OpenAQ
 </p>
         </div>
       </details>
-
-        <button className="myButton" onClick={onStart}>
-          START
-        </button>
     </section>
   )
 }

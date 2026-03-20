@@ -1,9 +1,24 @@
   body {
   margin: 0;
-  background: linear-gradient(to bottom, white, #BBB5D8);
-  gap: 20px;
+  background: linear-gradient(to bottom, white, #9e8bf8);
+  gap: 10px;
 }
 
+.startButton{
+  background: linear-gradient(135deg, #99a3ff, #4e1eff);
+  color: rgb(0, 0, 0);
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+  border-color: #1e293b;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
 .myButton{
   background-color: rgb(63, 36, 161);
   color: white;
@@ -14,12 +29,15 @@
   cursor: pointer;
   transition: 0.2s;
   margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .menuButton{
-  background-color: rgb(191, 173, 255);
+  background: linear-gradient(135deg, #ffffff, #8563ff);
   color: rgb(0, 0, 0);
-  border: none;
+  border-color: #1e293b;
   padding: 12px 20px;
   border-radius: 20px;
   font-size: 16px;
@@ -35,7 +53,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  gap: 30px;
+  gap: 10px;
 }
 
 .laatikko {
