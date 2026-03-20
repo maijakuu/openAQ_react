@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import '../components/App.css'
 import InfoTooltip from '../components/InfoTooltip.jsx'
 
+
 function Meanpage({ onBack }) {
 
   /*const [nykyinen state, setteri(arvoa päivittävä funktio)] = useState(Haluttu lähtöarvo)*/ 
@@ -15,10 +16,18 @@ function Meanpage({ onBack }) {
   const [sensor_unit, setUnit] = useState('')/*Unitin tallennuspaikka*/
   const [sensor_parameter, setParameter] = useState('')
   const [searched, setSearched] = useState(false)
-
-/*====================================================================================== */
-/*                          useEffect-API Hooks                                          */
-/*====================================================================================== */
+  const tooltipText = [
+  'PM2.5: Fine particulate matter, 2.5 micrometers or smaller.\n' +
+  'PM10: Particulate matter, 10 micrometers or smaller.\n' +
+  'O3: Ozone.\n' +
+  'NO2: Nitrogen dioxide.\n' +
+  'SO2: Sulfur dioxide.'
+  ]
+  const tooltipInfo = [`Due to the large number of parameters, the query has been modified to show only the sensors available at each location. Otherwise, most queries would return null, since each location has only specific sensors`]
+/*====================================================================================================== */
+/*                                       useEffect-API Hookit      
+*/
+/*=======================================Haetaan sijainnit============================================== */
   useEffect(() => {
     async function fetchLocations() {
       try {
@@ -36,7 +45,7 @@ function Meanpage({ onBack }) {
     fetchLocations()
   }, [])
 
-/*====================================================================================== */
+/*======================Haetaan sensorin tyyppi valitun sijainnin mukaan=============================== */
   useEffect(() => {
     async function fetchSensortypes() {
       if (!location){
@@ -64,7 +73,7 @@ function Meanpage({ onBack }) {
 
     fetchSensortypes()}, [location])
 
-  /*====================================================================================== */
+  /*===============================Haetaan sensorin käyttämä yksikkö======================================= */
   
     useEffect(() => {
     async function fetchSensorUnit() {
@@ -85,6 +94,7 @@ function Meanpage({ onBack }) {
 
     fetchSensorUnit()}, [user_sensor])
 
+/*===========================Haetaan sensorin parametri======================================================= */
 
     useEffect(() => {
     async function fetchSensorParameter() {
@@ -104,8 +114,10 @@ function Meanpage({ onBack }) {
     }
 
     fetchSensorParameter()}, [user_sensor])
+
+
   /*====================================================================================== */
-/*                                                                                           */
+/*                                     Tehdään Query                                        */
   /*====================================================================================== */
 
     async function handleQuery() { /*Tehdään query databasesta*/
@@ -138,7 +150,7 @@ function Meanpage({ onBack }) {
     </div>
 
       <div className="laatikko">
-                                <InfoTooltip text={`Due to the large number of parameters, the query has been modified to show only the sensors available at each location. Otherwise, most queries would return null, since each location has only specific sensors`}>i</InfoTooltip>
+                                <InfoTooltip text={tooltipInfo}>i</InfoTooltip>
         <label htmlFor="location">Choose location by ID:</label>
         <select className="selectmenu"
           id="location"
@@ -187,7 +199,7 @@ function Meanpage({ onBack }) {
         {searched && result == null && <p>No matching measurements found</p>}
         
         {result !== null && <p>Mean value: {Number(result).toFixed(2)} {sensor_unit}</p>}
-        {searched && result !== null && <p>Parameter: {sensor_parameter}</p>}
+        {searched && result !== null && <p>Parameter: {sensor_parameter}<InfoTooltip text={tooltipText}>i</InfoTooltip></p>}
         {error && <p>Error: {error}</p>}
 
       </div>
