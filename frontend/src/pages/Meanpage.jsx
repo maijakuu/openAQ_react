@@ -2,15 +2,17 @@ import { useState, useEffect } from 'react'
 import '../components/App.css'
 import InfoTooltip from '../components/InfoTooltip.jsx'
 
-function Meanpage({ onBack, onSelect }) {
-  const [location, setLocation] = useState('')
-  const [locations, setLocations] = useState([])
+function Meanpage({ onBack }) {
+
+  /*const [nykyinen state, setteri(arvoa päivittävä funktio)] = useState(Haluttu lähtöarvo)*/ 
+  const [location, setLocation] = useState('')/*Käyttäjän valitsema vaihtoehto*/ 
+  const [locations, setLocations] = useState([]) /*Valikkoon tuleva lista*/ 
   const [error, setError] = useState(null)
-  const [user_sensor, setSensortype] = useState('')
-  const [sensors, setSensortypes] = useState([])
+  const [user_sensor, setSensortype] = useState('')/*Käyttäjän valitsema vaihtoehto*/ 
+  const [sensors, setSensortypes] = useState([])/*Valikkoon tuleva lista*/ 
   const [result, setResult] = useState(null)/*keskiarvo alustetaan null*/
-  const [user_date, setDate] = useState('')
-  const [sensor_unit, setUnit] = useState('')
+  const [user_date, setDate] = useState('')/*Käyttäjän valitsema vaihtoehto*/ 
+  const [sensor_unit, setUnit] = useState('')/*Unitin tallennuspaikka*/
   const [searched, setSearched] = useState(false)
 
 /*====================================================================================== */
@@ -81,7 +83,7 @@ function Meanpage({ onBack, onSelect }) {
     }
 
     fetchSensorUnit()}, [user_sensor])
-    
+
 
   /*====================================================================================== */
 /*                                                                                           */
@@ -164,7 +166,9 @@ function Meanpage({ onBack, onSelect }) {
         </button>
 
         {searched && result == null && <p>No matching measurements found</p>}
+        
         {result !== null && <p>Mean value: {Number(result).toFixed(2)} {sensor_unit}</p>}
+        {searched && result !== null && <p>Parameter:</p>}
         {error && <p>Error: {error}</p>}
 
       </div>
