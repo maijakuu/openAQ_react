@@ -10,20 +10,20 @@ load_dotenv()
 def get_measurements():
     with psycopg2.connect(database=os.getenv('DB'), user=os.getenv('DB_USER'), password=os.getenv('DB_PWD')) as conn:
         with conn.cursor(cursor_factory=RealDictCursor) as cursor:
-            cursor.execute("SELECT * FROM openaq.measurements")
+            cursor.execute("SELECT * FROM measurements")
             measurements = cursor.fetchall()
             return measurements
         
 def get_measurements_mean(user_location, user_date, user_sensor):
     with psycopg2.connect(database=os.getenv('DB'), user=os.getenv('DB_USER'), password=os.getenv('DB_PWD')) as conn:
         with conn.cursor(cursor_factory=RealDictCursor) as cursor:
-            cursor.execute("SELECT AVG(value) AS avg_value FROM openaq.measurements WHERE location_id = %s AND DATE(datetime) = %s AND sensors_id = %s",(user_location, user_date, user_sensor))
+            cursor.execute("SELECT AVG(value) AS avg_value FROM measurements WHERE location_id = %s AND DATE(datetime) = %s AND sensors_id = %s",(user_location, user_date, user_sensor))
             meanvalue = cursor.fetchone()
             return meanvalue
         
 def get_sensors_by_location(user_location):
     with psycopg2.connect(database=os.getenv('DB'), user=os.getenv('DB_USER'), password=os.getenv('DB_PWD')) as conn:
         with conn.cursor(cursor_factory=RealDictCursor) as cursor:
-            cursor.execute("SELECT DISTINCT sensors_id FROM openaq.measurements WHERE location_id = %s", (user_location,))
+            cursor.execute("SELECT DISTINCT sensors_id FROM measurements WHERE location_id = %s", (user_location,))
             sensorlocation = cursor.fetchall()
             return sensorlocation

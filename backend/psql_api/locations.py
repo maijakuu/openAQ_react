@@ -11,7 +11,7 @@ load_dotenv()
 def get_locations():
     with psycopg2.connect(database=os.getenv('DB'), user=os.getenv('DB_USER'), password=os.getenv('DB_PWD')) as conn:
         with conn.cursor(cursor_factory=RealDictCursor) as cursor:
-            cursor.execute("SELECT location_id, city FROM openaq.locations")
+            cursor.execute("SELECT location_id, city FROM locations")
             locations = cursor.fetchall()
             return locations
         
@@ -19,20 +19,20 @@ def get_locations():
 def get_measurements_by_location():
         with psycopg2.connect(database=os.getenv('DB'), user=os.getenv('DB_USER'), password=os.getenv('DB_PWD')) as conn:
             with conn.cursor(cursor_factory=RealDictCursor) as cursor:
-                cursor.execute("SELECT * FROM openaq.locations")
+                cursor.execute("SELECT * FROM locations")
                 locations = cursor.fetchall()
                 return locations
             
 def get_amount_by_location(user_location):
         with psycopg2.connect(database=os.getenv('DB'), user=os.getenv('DB_USER'), password=os.getenv('DB_PWD')) as conn:
             with conn.cursor(cursor_factory=RealDictCursor) as cursor:
-                cursor.execute(f"SELECT COUNT(*) AS measurement_count FROM openaq.measurements WHERE location_id = %s", (user_location,))
+                cursor.execute(f"SELECT COUNT(*) AS measurement_count FROM measurements WHERE location_id = %s", (user_location,))
                 locations = cursor.fetchall()
                 return locations
 
 def get_measurements_by_date(user_location, user_date):
         with psycopg2.connect(database=os.getenv('DB'), user=os.getenv('DB_USER'), password=os.getenv('DB_PWD')) as conn:
             with conn.cursor(cursor_factory=RealDictCursor) as cursor:  
-                cursor.execute("SELECT * FROM openaq.measurements WHERE location_id = %s AND DATE(datetime) = %s",(user_location, user_date))
+                cursor.execute("SELECT * FROM measurements WHERE location_id = %s AND DATE(datetime) = %s",(user_location, user_date))
                 rows = cursor.fetchall()
                 return rows
