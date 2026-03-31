@@ -11,7 +11,7 @@ load_dotenv()
 def get_locations():
     with psycopg2.connect(database=os.getenv('DB'), user=os.getenv('DB_USER'), password=os.getenv('DB_PWD')) as conn:
         with conn.cursor(cursor_factory=RealDictCursor) as cursor:
-            cursor.execute("SELECT location_id, city FROM locations")
+            cursor.execute("SELECT l.location_id, l.city_id, c.city_name FROM locations l JOIN city c ON l.city_id = c.city_id")
             locations = cursor.fetchall()
             return locations
         

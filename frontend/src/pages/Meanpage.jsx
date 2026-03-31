@@ -160,7 +160,7 @@ function Meanpage({ onBack }) {
         <option value="">-- Select sensor location --</option>
         {locations.map((loc) => (
           <option key={loc.location_id} value={loc.location_id}>
-            {loc.location_id}: {loc.city}
+            {loc.location_id}: {loc.city_name}
           </option> 
           ))}
         </select>

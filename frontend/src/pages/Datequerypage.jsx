@@ -61,7 +61,7 @@ function Querypage({ onBack }) {
           <option value="">-- Select sensor location --</option>
           {locations.map((loc) => (
             <option key={loc.location_id} value={loc.location_id}> {/* Otetaan location id ja käytetään sitä määräävänä arvona ja valuena. value tallennetaan myöhempää käyttöä varten */}
-           {loc.location_id}: {loc.city}  {/* Tämä näytetään käyttäjälle */}
+           {loc.location_id}: {loc.city_name}  {/* Tämä näytetään käyttäjälle */}
             </option> 
           ))}
       </select>
